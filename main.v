@@ -1,10 +1,13 @@
 // main.v
 // Learning V language.
 // TODO check for errors in all the functions.
+
+/// This program copies Windows 10 images files displayed during login.
+
 import os
 
 fn main() {
-	deco := decorator('-', 60)
+	deco := decorator('-', 40)
 	user_home_dir := os.home_dir()
 	original_img_dir := user_home_dir + 'AppData\\Local\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\\Assets'
 	desktop_img_dir := user_home_dir + '\\' + 'Desktop\\processed_images'
@@ -21,16 +24,17 @@ fn main() {
 }
 
 
-/// Remove a previous directory if exists and create a new one.
+/// Remove a previous directory if it exists and create a new one.
 fn clean(dir_path string) {
-
+	// The os.rmdir(path string) did not work.
+	// There this approach was taken.
 	if (os.dir_exists(dir_path)) {
 		files := os.ls(dir_path) or {
 			println(err)
 			return
 		}
 
-		// Remove single file items
+		// First remove single file items
 		for item in files {
 			file_path := dir_path + '\\' + item
 			os.rm(file_path)
@@ -55,12 +59,11 @@ fn copy_image_files(original_path string, desktop_image_dir string) int {
 		return 0
 	}
 
-	// This will be appended to new file name
+	// This will be appended to new file name.
 	mut suffix := 1
 	mut successful_copied := 0
 
 	for item in files {
-		// println(item)
 		old_file_path := original_path + '\\' + item
 
 		new_name := 'image_' + suffix.str() + '.jpg'
@@ -98,5 +101,6 @@ fn decorator(symbol string, times int) string {
 
 /// A uniform way to print message to the user on the terminal.
 fn messenger(message string) {
+	// TODO Prefix or suffix could be added.
 	println(message)
 }
