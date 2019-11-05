@@ -3,16 +3,17 @@
 Clear-Host
 
 # Cleaning up
-if (Test-Path .\main.exe) {
-    Remove-Item -Path .\main.exe
+if (Test-Path .\bin\main.exe) {
+    Remove-Item -Path .\bin\main.exe
 }
 
-if (Test-Path .\main.tmp.c) {
-    Remove-Item -Path .\main.tmp.c
+if (Test-Path .\bin\main.tmp.c) {
+    Remove-Item -Path .\bin\main.tmp.c
 }
 
 # Compile
-v .\main.v
+"Compiling ..."
+v -o bin\main.exe .\src\main.v
 
 # We could not compile due to some reason.
 if ($LastExitCode -eq 1) {
@@ -20,9 +21,11 @@ if ($LastExitCode -eq 1) {
     Exit
 }
 
+"done compiling.`n"
+
 # Run
-if (Test-Path .\main.exe) {
-    .\main.exe
+if (Test-Path .\bin\main.exe) {
+    .\bin\main.exe
 } else {
     "No executable to run!"
 }
