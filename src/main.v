@@ -85,6 +85,7 @@ fn copy_image_files(original_path string, desktop_image_dir string) int {
 		suffix++
 	}
 
+	// Return the number of files successful copied.
 	return successful_copied
 }
 
