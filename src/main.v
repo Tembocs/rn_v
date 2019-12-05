@@ -1,9 +1,5 @@
 // main.v
 // Learning V language.
-// TODO check for errors in all the functions.
-
-/// This program copies Windows 10 images files displayed during login.
-
 import os
 
 fn main() {
@@ -27,8 +23,8 @@ fn main() {
 /// Remove a previous directory if it exists and create a new one.
 fn clean(dir_path string) {
 	// The os.rmdir(path string) did not work.
-	// There this approach was taken.
-	if (os.dir_exists(dir_path)) {
+	// Therefore this approach was taken.
+	if (os.is_dir(dir_path)) {
 		files := os.ls(dir_path) or {
 			println(err)
 			return
@@ -44,14 +40,22 @@ fn clean(dir_path string) {
 		os.rmdir(dir_path)
 	}
 
-	messenger('creating a new image directory ...')
-	os.mkdir(dir_path)
+	messenger('Creating a new image directory ...')
+	success := os.mkdir(dir_path) or {
+		print(err)
+		return
+	}
+
+	if (success) {
+		messenger('New image directory successful created.')
+	} else {
+		messenger('Could not create new image directory.')
+	}
 }
 
 /// Copy image files.
 fn copy_image_files(original_path string, desktop_image_dir string) int {	
 	// Get files to be copied
-	// V requires that we manually handle the error (Optional, Result)
 	files := os.ls(original_path) or {
 		println(err)
 
@@ -77,7 +81,7 @@ fn copy_image_files(original_path string, desktop_image_dir string) int {
 		}
 
 		if (!success) {
-			messenger('could not copy image: $new_name')
+			messenger('Could not copy image: $new_name')
 		} else {
 			successful_copied++
 		}
