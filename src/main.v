@@ -19,7 +19,6 @@ fn main() {
 	println(deco)
 }
 
-
 /// Remove a previous directory if it exists and create a new one.
 fn clean(dir_path string) {
 	// The os.rmdir(path string) did not work.
@@ -40,7 +39,7 @@ fn clean(dir_path string) {
 		os.rmdir(dir_path)
 	}
 
-	messenger('Creating a new image directory ...')
+	messenger('Creating a new images directory ...')
 	success := os.mkdir(dir_path) or {
 		print(err)
 		return
