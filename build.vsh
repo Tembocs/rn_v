@@ -9,27 +9,26 @@ system("clear")
 
 println("Cleaning ...")
 
-if (is_dir('build')) {
-    rm("build/*")
-}
+// if is_dir('build') {
+//     rm("build/*")?
+// } 
 
-if (is_dir('bin')) {
-    rm("bin/*")
-}
+if is_dir('bin') {
+    rmdir_all('bin')?
+} 
 
+mkdir('bin')?
 
 println('Compiling ...')
 built_successful := system("v -o bin\\main.exe src\\main.v")
 
-if (built_successful == 0) {
+if built_successful == 0 {
     println("Successful built code!")
 
     // Now compiling
     println("Done compiling.")
 
-    if (exists("bin\\main.exe")) {
-        // clear() does not work so far
-        // clear()
+    if exists("bin\\main.exe") {
         system("clear")
         println("Now running ...")
         system("bin\\main.exe")
