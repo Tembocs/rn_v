@@ -10,14 +10,16 @@ fn main() {
 
 	divider := '-'
 	os.system('clear')
+
 	println(term.header('Copying image files', divider))
 	
 	// Remove the previous image directory if it exists.
-	os.rmdir_all(desktop_img_dir) or {
-		println(err)
+	if os.exists(desktop_img_dir) {
+		os.rmdir_all(desktop_img_dir) or {
+			println(err)
+		}
 	}
 	
-
 	// (Re)create the desktop image directory
 	os.mkdir(desktop_img_dir) or {
 		println(err)
